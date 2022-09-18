@@ -1,0 +1,34 @@
+{
+  "name": "woovi",
+  "version": "1.0.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:all": "concurrently -kill-others-on-fail \"yarn dev:server\" \"yarn dev:web\"",
+    "dev:server": "yarn workspace server dev",
+    "dev:web": "yarn workspace web dev",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx}' --fix",
+    "format": "prettier --write '**/*.{ts,tsx}'"
+  },
+  "lint-staged": {
+    "*.ts": "eslint --fix"
+  },
+  "author": "Joao Hinning",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "concurrently": "^7.4.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.37.0",
+    "@typescript-eslint/parser": "^5.37.0",
+    "eslint": "^8.23.1",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.8",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
+  }
+}

@@ -1,11 +1,14 @@
-import { app } from "./app";
+import { app } from './app';
+import { connectToDB } from './database/dbConnection';
 
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
-  console.log(`Running on port ${PORT}`);
-});
+app
+  .listen(PORT, async () => {
+    await connectToDB();
 
-app.on("error", (err) => {
-  console.log(err);
-});
+    console.log(`Running on port ${PORT}`);
+  })
+  .on('error', (err) => {
+    console.log(err);
+  });
