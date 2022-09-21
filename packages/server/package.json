@@ -8,10 +8,12 @@
   },
   "dependencies": {
     "@koa/cors": "^3.4.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.2",
     "graphql": "^16.6.0",
     "graphql-helix": "^1.13.0",
     "graphql-relay": "^0.10.0",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
     "koa-logger": "^3.2.1",
@@ -19,6 +21,8 @@
     "mongoose": "^6.6.1"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^8.5.9",
     "@types/koa": "^2.13.5",
     "@types/koa-bodyparser": "^4.3.8",
     "@types/koa-logger": "^3.1.2",

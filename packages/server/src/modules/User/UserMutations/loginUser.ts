@@ -2,11 +2,16 @@ import { GraphQLNonNull, GraphQLString } from 'graphql';
 import { mutationWithClientMutationId } from 'graphql-relay';
 import { UserModel } from '../userModel';
 import { UserType } from '../userType';
-import { genSalt, hash } from 'bcryptjs';
+import { compare } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-export const createUser = mutationWithClientMutationId({
-  name: 'createUser',
+interface ILoginPayload {
+  email: string;
+  password: string;
+}
+
+export const loginUser = mutationWithClientMutationId({
+  name: 'loginUser',
   inputFields: {
     email: {
       type: new GraphQLNonNull(GraphQLString),
@@ -15,10 +20,6 @@ export const createUser = mutationWithClientMutationId({
     password: {
       type: new GraphQLNonNull(GraphQLString),
       description: 'User password',
-    },
-    fullName: {
-      type: new GraphQLNonNull(GraphQLString),
-      description: 'User full name',
     },
   },
   outputFields: {
@@ -31,29 +32,26 @@ export const createUser = mutationWithClientMutationId({
       resolve: (response) => response.token,
     },
   },
-  mutateAndGetPayload: async ({ ...payload }) => {
+  mutateAndGetPayload: async ({ ...payload }: ILoginPayload) => {
     const { email, password } = payload;
 
-    const emailAlreadyTaken = await UserModel.findOne({ email });
+    const user = await UserModel.findOne({ email });
 
-    if (emailAlreadyTaken) {
-      throw new Error('User already exists');
+    if (!user) {
+      throw new Error('Invalid email');
     }
 
-    const salt = await genSalt();
-    const hashPassword = await hash(password, salt);
+    console.log(user.password);
+    const isValidPassword = await compare(password, user.password);
 
-    const newUser = new UserModel({
-      ...payload,
-      password: hashPassword,
-    });
-
-    await newUser.save();
+    if (!isValidPassword) {
+      throw new Error('Invalid email or password');
+    }
 
     const token = jwt.sign({ email }, process.env.JWT_SECRET!, {
       expiresIn: '10h',
     });
 
-    return { user: newUser, token };
+    return { user, token };
   },
 });

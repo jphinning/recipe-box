@@ -8,7 +8,7 @@ export const findAllUsers: GraphQLFieldConfig<any, any, any> = {
   args: connectionArgs,
   resolve: async (_, args) => {
     const users = await UserModel.find({});
-    console.log(users);
+
     return connectionFromArray(users, args);
   },
 };
