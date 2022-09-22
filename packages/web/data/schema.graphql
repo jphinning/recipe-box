@@ -1,0 +1,146 @@
+"""RootQueryType"""
+type Query {
+  findAllUsers(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): UserConnection
+  findOneUser(id: ID): User
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Fetches objects given their IDs"""
+  nodes(
+    """The IDs of objects"""
+    ids: [ID!]!
+  ): [Node]!
+}
+
+"""A connection to a list of items."""
+type UserConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserEdge]
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""An edge in a connection."""
+type UserEdge {
+  """The item at the end of the edge"""
+  node: User
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""A user who loves to run"""
+type User implements Node {
+  """The ID of an object"""
+  id: ID!
+
+  """The name of the user"""
+  fullName: String
+  email: String
+  password: String
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""RootMutationType"""
+type Mutation {
+  createUser(input: createUserInput!): createUserPayload
+  deleteUser(input: deleteUserInput!): deleteUserPayload
+  updateUser(input: updateUserInput!): updateUserPayload
+  loginUser(input: loginUserInput!): loginUserPayload
+}
+
+type createUserPayload {
+  user: User
+  token: String
+  clientMutationId: String
+}
+
+input createUserInput {
+  """User email"""
+  email: String!
+
+  """User password"""
+  password: String!
+
+  """User full name"""
+  fullName: String!
+  clientMutationId: String
+}
+
+type deleteUserPayload {
+  deletedOutput: String
+  clientMutationId: String
+}
+
+input deleteUserInput {
+  globalId: ID
+  clientMutationId: String
+}
+
+type updateUserPayload {
+  user: User
+  clientMutationId: String
+}
+
+input updateUserInput {
+  globalId: ID
+
+  """User password"""
+  password: String!
+
+  """User full name"""
+  fullName: String!
+  clientMutationId: String
+}
+
+type loginUserPayload {
+  user: User
+  token: String
+  clientMutationId: String
+}
+
+input loginUserInput {
+  """User email"""
+  email: String!
+
+  """User password"""
+  password: String!
+  clientMutationId: String
+}
