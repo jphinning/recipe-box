@@ -12,6 +12,10 @@ import {
   sendResult,
 } from 'graphql-helix';
 import { schema } from './schema/schema';
+import {
+  findCurrentUser,
+  IAuthContext,
+} from './modules/User/auth/findCurrentUser';
 
 export const app = new Koa();
 
@@ -20,7 +24,10 @@ app.use(cors());
 app.use(logger());
 app.use(routes.routes());
 
-app.use(async (ctx) => {
+app.use(async (ctx: IAuthContext) => {
+  const user = await findCurrentUser(ctx);
+  ctx.user = user;
+
   // Create a generic Request object that can be consumed by Graphql Helix's API
   const request = {
     body: ctx.request.body,
@@ -48,6 +55,7 @@ app.use(async (ctx) => {
     contextFactory: () => {
       return {
         ...ctx.req.headers,
+        user: ctx.user,
       };
     },
   });

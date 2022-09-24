@@ -48,12 +48,14 @@ export const createUser = mutationWithClientMutationId({
       password: hashPassword,
     });
 
-    await newUser.save();
+    const { id, fullName } = newUser;
 
-    const token = jwt.sign({ email }, process.env.JWT_SECRET!, {
-      expiresIn: '10h',
+    const token = jwt.sign({ id, email }, process.env.JWT_SECRET!, {
+      expiresIn: process.env.JWT_EXPIRATION,
     });
 
-    return { user: newUser, token };
+    await newUser.save();
+
+    return { user: { email, fullName }, token };
   },
 });
