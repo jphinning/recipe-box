@@ -1,4 +1,5 @@
 import { fromGlobalId, nodeDefinitions } from 'graphql-relay';
+import { RecipesModel } from '../modules/Recipes/recipesModel';
 import { UserModel } from '../modules/User/userModel';
 
 export const { nodeInterface, nodeField, nodesField } = nodeDefinitions(
@@ -6,12 +7,14 @@ export const { nodeInterface, nodeField, nodesField } = nodeDefinitions(
     const { id: userGlobalID, type } = fromGlobalId(globalId);
 
     if (type === 'User') return await UserModel.findById(userGlobalID);
+    if (type === 'Recipes') return await RecipesModel.findById(userGlobalID);
 
     return null;
   },
   (obj) => {
-    const objName = obj instanceof UserModel ? 'User' : undefined;
+    if (obj instanceof UserModel) return 'User';
+    if (obj instanceof RecipesModel) return 'Recipes';
 
-    return objName;
+    return undefined;
   },
 );
