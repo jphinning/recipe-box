@@ -1,5 +1,6 @@
 import { GraphQLID, GraphQLString } from 'graphql';
-import { fromGlobalId, mutationWithClientMutationId } from 'graphql-relay';
+import { mutationWithClientMutationId } from 'graphql-relay';
+import { IAuthContext } from '../auth/findCurrentUser';
 import { UserModel } from '../userModel';
 
 export const deleteUser = mutationWithClientMutationId({
@@ -13,9 +14,13 @@ export const deleteUser = mutationWithClientMutationId({
       resolve: (response) => response.deletedCount,
     },
   },
-  mutateAndGetPayload: async ({ globalId }) => {
-    const { id } = fromGlobalId(globalId);
+  mutateAndGetPayload: async (_, ctx: IAuthContext) => {
+    if (!ctx.user) {
+      return {
+        error: 'Unauthorized',
+      };
+    }
 
-    return await UserModel.deleteOne({ _id: id });
+    return await UserModel.deleteOne({ _id: ctx.user.id });
   },
 });

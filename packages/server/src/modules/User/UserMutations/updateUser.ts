@@ -1,5 +1,7 @@
 import { GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql';
-import { fromGlobalId, mutationWithClientMutationId } from 'graphql-relay';
+import { mutationWithClientMutationId } from 'graphql-relay';
+import { errorField } from '../../../graphql/errorField';
+import { IAuthContext } from '../auth/findCurrentUser';
 import { UserModel } from '../userModel';
 import { UserType } from '../userType';
 
@@ -21,12 +23,17 @@ export const updateUser = mutationWithClientMutationId({
       type: UserType,
       resolve: (response) => response.user,
     },
+    ...errorField,
   },
-  mutateAndGetPayload: async ({ globalId, ...payload }) => {
-    const { id } = fromGlobalId(globalId);
+  mutateAndGetPayload: async ({ ...payload }, ctx: IAuthContext) => {
+    if (!ctx.user) {
+      return {
+        error: 'Unauthorized',
+      };
+    }
 
-    await UserModel.updateOne({ _id: id }, { ...payload });
-    const user = await UserModel.findById(id);
+    await UserModel.updateOne({ _id: ctx.user.id }, { ...payload });
+    const user = await UserModel.findById(ctx.user.id);
 
     return { user };
   },
