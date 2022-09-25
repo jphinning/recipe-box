@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import NavLink from '../UI/navlink/NavLink';
+import NavLink from '../UI/Navlink/NavLink';
 import { NavbarStyles } from './NavBarStyles';
 
 function Navbar() {

@@ -4,6 +4,7 @@ import { UserModel } from '../userModel';
 import { UserType } from '../userType';
 import { compare } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { errorField } from '../../../graphql/errorField';
 
 interface ILoginPayload {
   email: string;
@@ -31,6 +32,7 @@ export const loginUser = mutationWithClientMutationId({
       type: GraphQLString,
       resolve: (response) => response.token,
     },
+    ...errorField,
   },
   mutateAndGetPayload: async ({ ...payload }: ILoginPayload) => {
     const { email, password } = payload;
@@ -38,14 +40,14 @@ export const loginUser = mutationWithClientMutationId({
     const user = await UserModel.findOne({ email });
 
     if (!user) {
-      throw new Error('Invalid email');
+      return { error: 'Invalid email' };
     }
 
     console.log(user.password);
     const isValidPassword = await compare(password, user.password);
 
     if (!isValidPassword) {
-      throw new Error('Invalid email or password');
+      return { error: 'Invalid email or password' };
     }
 
     const token = jwt.sign({ email }, process.env.JWT_SECRET!, {

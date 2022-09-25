@@ -14,6 +14,20 @@ type Query {
     last: Int
   ): UserConnection
   findOneUser(id: ID): User
+  findAllRecipes(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): RecipesConnection
+  findOneRecipe(id: ID): Recipes
 
   """Fetches an object given its ID"""
   node(
@@ -61,7 +75,6 @@ type UserEdge {
   cursor: String!
 }
 
-"""A user who loves to run"""
 type User implements Node {
   """The ID of an object"""
   id: ID!
@@ -70,6 +83,21 @@ type User implements Node {
   fullName: String
   email: String
   password: String
+
+  """All user recipes"""
+  recipes(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): RecipesConnection
 }
 
 """An object with an ID"""
@@ -78,12 +106,42 @@ interface Node {
   id: ID!
 }
 
+"""A connection to a list of items."""
+type RecipesConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [RecipesEdge]
+}
+
+"""An edge in a connection."""
+type RecipesEdge {
+  """The item at the end of the edge"""
+  node: Recipes
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Recipes implements Node {
+  """The ID of an object"""
+  id: ID!
+  title: String!
+  ingredients: [String]!
+  instructions: [String]!
+  userId: User!
+}
+
 """RootMutationType"""
 type Mutation {
   createUser(input: createUserInput!): createUserPayload
   deleteUser(input: deleteUserInput!): deleteUserPayload
   updateUser(input: updateUserInput!): updateUserPayload
   loginUser(input: loginUserInput!): loginUserPayload
+  createRecipe(input: createRecipeInput!): createRecipePayload
+  deleteRecipe(input: deleteRecipeInput!): deleteRecipePayload
+  updateRecipe(input: updateRecipeInput!): updateRecipePayload
 }
 
 type createUserPayload {
@@ -116,6 +174,7 @@ input deleteUserInput {
 
 type updateUserPayload {
   user: User
+  error: String
   clientMutationId: String
 }
 
@@ -133,6 +192,7 @@ input updateUserInput {
 type loginUserPayload {
   user: User
   token: String
+  error: String
   clientMutationId: String
 }
 
@@ -142,5 +202,54 @@ input loginUserInput {
 
   """User password"""
   password: String!
+  clientMutationId: String
+}
+
+type createRecipePayload {
+  recipe: Recipes
+  error: String
+  clientMutationId: String
+}
+
+input createRecipeInput {
+  """Recipe title"""
+  title: String!
+
+  """Recipe ingredients"""
+  ingredients: [String]!
+
+  """Recipe instructions"""
+  instructions: String!
+  clientMutationId: String
+}
+
+type deleteRecipePayload {
+  deletedOutput: String
+  error: String
+  clientMutationId: String
+}
+
+input deleteRecipeInput {
+  globalId: ID
+  clientMutationId: String
+}
+
+type updateRecipePayload {
+  recipe: Recipes
+  error: String
+  clientMutationId: String
+}
+
+input updateRecipeInput {
+  globalId: ID
+
+  """Recipe title"""
+  title: String!
+
+  """Recipe ingredients"""
+  ingredients: [String]!
+
+  """Recipe instructions"""
+  instructions: [String]!
   clientMutationId: String
 }
