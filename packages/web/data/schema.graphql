@@ -147,6 +147,7 @@ type Mutation {
 type createUserPayload {
   user: User
   token: String
+  error: String
   clientMutationId: String
 }
 

@@ -4,6 +4,7 @@ import { UserModel } from '../userModel';
 import { UserType } from '../userType';
 import { genSalt, hash } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { errorField } from '../../../graphql/errorField';
 
 export const createUser = mutationWithClientMutationId({
   name: 'createUser',
@@ -30,32 +31,37 @@ export const createUser = mutationWithClientMutationId({
       type: GraphQLString,
       resolve: (response) => response.token,
     },
+    ...errorField,
   },
   mutateAndGetPayload: async ({ ...payload }) => {
-    const { email, password } = payload;
+    try {
+      const { email, password } = payload;
 
-    const emailAlreadyTaken = await UserModel.findOne({ email });
+      const emailAlreadyTaken = await UserModel.findOne({ email });
 
-    if (emailAlreadyTaken) {
-      throw new Error('User already exists');
+      if (emailAlreadyTaken) {
+        return { error: 'User already exists' };
+      }
+
+      const salt = await genSalt();
+      const hashPassword = await hash(password, salt);
+
+      const newUser = new UserModel({
+        ...payload,
+        password: hashPassword,
+      });
+
+      const { id, fullName } = newUser;
+
+      const token = jwt.sign({ id, email }, process.env.JWT_SECRET!, {
+        expiresIn: process.env.JWT_EXPIRATION,
+      });
+
+      await newUser.save();
+
+      return { user: { id, email, fullName }, token };
+    } catch {
+      return { error: 'Server error' };
     }
-
-    const salt = await genSalt();
-    const hashPassword = await hash(password, salt);
-
-    const newUser = new UserModel({
-      ...payload,
-      password: hashPassword,
-    });
-
-    const { id, fullName } = newUser;
-
-    const token = jwt.sign({ id, email }, process.env.JWT_SECRET!, {
-      expiresIn: process.env.JWT_EXPIRATION,
-    });
-
-    await newUser.save();
-
-    return { user: { email, fullName }, token };
   },
 });
