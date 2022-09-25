@@ -8,13 +8,14 @@ import signInSchema from './SignInSchema';
 import { signInMutation } from './SignInMutation';
 import { SignInMutation } from './__generated__/SignInMutation.graphql';
 import { toast } from 'react-toastify';
-import { Form, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useAuth, { IAuthResponse } from '../../hooks/useAuth';
 import { useMutation } from 'react-relay';
 import {
   Wrapper,
   FormBox,
   PrimaryButton,
+  Form,
 } from '../../components/UI/Form/FormStyles';
 
 interface SignInForm extends FieldValues {

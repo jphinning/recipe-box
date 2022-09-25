@@ -5,13 +5,14 @@ import { DefaultField } from '../../components/DefaultField/DefaultField';
 import { CircularProgress, Typography } from '@mui/material';
 import { DARK_BLUE } from '../../utils/colorConsts';
 import { toast } from 'react-toastify';
-import { Form, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useAuth, { IAuthResponse } from '../../hooks/useAuth';
 import { useMutation } from 'react-relay';
 import { SignUpMutation } from './__generated__/SignUpMutation.graphql';
 import { signUpMutation } from './SignUpMutation';
 import signUpSchema from './SignUpSchema';
 import {
+  Form,
   FormBox,
   PrimaryButton,
   Wrapper,
