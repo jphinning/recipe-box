@@ -1,7 +1,6 @@
 import React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form, FormBox, PrimaryButton, Wrapper } from './SignInStyles';
 import { DefaultField } from '../../components/DefaultField/DefaultField';
 import { CircularProgress, Typography } from '@mui/material';
 import { DARK_BLUE } from '../../utils/colorConsts';
@@ -9,9 +8,14 @@ import signInSchema from './SignInSchema';
 import { signInMutation } from './SignInMutation';
 import { SignInMutation } from './__generated__/SignInMutation.graphql';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import useAuth, { IAuthResponse } from '../../hooks/useAuth';
 import { useMutation } from 'react-relay';
+import {
+  Wrapper,
+  FormBox,
+  PrimaryButton,
+} from '../../components/UI/Form/FormStyles';
 
 interface SignInForm extends FieldValues {
   email: string;
@@ -21,6 +25,7 @@ interface SignInForm extends FieldValues {
 export default function SignIn() {
   const { signIn } = useAuth();
   const navigate = useNavigate();
+
   const [runSignIn, isSignInLoading] =
     useMutation<SignInMutation>(signInMutation);
 
@@ -37,7 +42,6 @@ export default function SignIn() {
       },
       onCompleted: (data) => {
         if (data.loginUser?.error) {
-          console.log('ok');
           toast.error('Invalid Credentials');
         }
 
