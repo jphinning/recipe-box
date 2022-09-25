@@ -192,6 +192,7 @@ input updateUserInput {
 type loginUserPayload {
   user: User
   token: String
+  error: String
   clientMutationId: String
 }
 

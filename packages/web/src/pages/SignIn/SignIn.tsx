@@ -3,13 +3,15 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, FormBox, PrimaryButton, Wrapper } from './SignInStyles';
 import { DefaultField } from '../../components/DefaultField/DefaultField';
-import { Typography } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import { DARK_BLUE } from '../../utils/colorConsts';
 import signInSchema from './SignInSchema';
-// import { toast } from 'react-toastify';
-// import { useNavigate } from 'react-router-dom';
-
-// import useAuth from '../../hooks/useAuth';
+import { signInMutation } from './SignInMutation';
+import { SignInMutation } from './__generated__/SignInMutation.graphql';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import useAuth, { IAuthResponse } from '../../hooks/useAuth';
+import { useMutation } from 'react-relay';
 
 interface SignInForm extends FieldValues {
   email: string;
@@ -17,36 +19,37 @@ interface SignInForm extends FieldValues {
 }
 
 export default function SignIn() {
-  // const { signIn } = useAuth();
-  // const navigate = useNavigate();
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
+  const [runSignIn, isSignInLoading] =
+    useMutation<SignInMutation>(signInMutation);
 
   const { control, handleSubmit } = useForm<SignInForm>({
     resolver: yupResolver(signInSchema),
   });
 
-  // const success = () => {
-  //   toast.success('Success');
-  //   navigate('/');
-  //   // signIn(data!);
-  // };
+  const onSubmit = async (formInputData: SignInForm) => {
+    runSignIn({
+      variables: {
+        input: {
+          ...formInputData,
+        },
+      },
+      onCompleted: (data) => {
+        if (data.loginUser?.error) {
+          console.log('ok');
+          toast.error('Invalid Credentials');
+        }
 
-  // useEffect(() => {
-  //   if (!isLoading && isError) {
-  //     if ('status' in error!) {
-  //       errorMessage(error.status);
-  //       return;
-  //     }
-  //   }
-  //   if (!isLoading && isSuccess) {
-  //     success();
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isLoading]);
+        if (data.loginUser?.token && data.loginUser.user) {
+          toast.success('Login successful');
+          navigate('/');
 
-  async function onSubmit({ email, password }: SignInForm) {
-    console.log(email, password);
-    // await runSignIn({ email, password });
-  }
+          signIn(data.loginUser as IAuthResponse);
+        }
+      },
+    });
+  };
 
   return (
     <Wrapper>
@@ -63,7 +66,11 @@ export default function SignIn() {
             type='password'
           />
           <PrimaryButton onClick={handleSubmit(onSubmit)}>
-            Sign In
+            {isSignInLoading ? (
+              <CircularProgress size={20} sx={{ color: 'white' }} />
+            ) : (
+              'Sign In'
+            )}
           </PrimaryButton>
         </Form>
       </FormBox>

@@ -2,10 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSignOut, setUser } from '../store/slices/userSlice';
 import { RootState, userPersistor } from '../store/store';
 
-export interface AuthResponse {
+export interface IAuthResponse {
   token: string;
-  email: string;
-  fullName: string;
+  user: {
+    email: string;
+    fullName: string;
+  };
 }
 
 const useAuth = () => {
@@ -15,13 +17,13 @@ const useAuth = () => {
 
   const dispatch = useDispatch();
 
-  const signIn = (res: AuthResponse) => {
+  const signIn = (res: IAuthResponse) => {
     // Saving in localStorage with Redux Persist
     dispatch(
       setUser({
         token: res.token,
-        email: res.email,
-        fullName: res.fullName,
+        email: res.user.email,
+        fullName: res.user.fullName,
       }),
     );
   };
