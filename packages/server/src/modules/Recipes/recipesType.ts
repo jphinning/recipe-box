@@ -15,8 +15,11 @@ export const RecipesType = new GraphQLObjectType({
   fields: () => ({
     id: globalIdField('Recipes'),
     title: { type: new GraphQLNonNull(GraphQLString) },
+    description: { type: GraphQLString },
     ingredients: { type: new GraphQLNonNull(new GraphQLList(GraphQLString)) },
     instructions: { type: new GraphQLNonNull(new GraphQLList(GraphQLString)) },
+    createdAt: { type: GraphQLString },
+    updatedAt: { type: GraphQLString },
     userId: {
       type: new GraphQLNonNull(UserType),
       resolve: async ({ userId }) => await UserModel.findById(userId),

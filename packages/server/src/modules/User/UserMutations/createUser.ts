@@ -59,7 +59,10 @@ export const createUser = mutationWithClientMutationId({
 
       await newUser.save();
 
-      return { user: { id, email, fullName }, token };
+      return {
+        user: { id, email, fullName },
+        token,
+      };
     } catch {
       return { error: 'Server error' };
     }

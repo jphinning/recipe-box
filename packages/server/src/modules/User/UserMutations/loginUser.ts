@@ -43,14 +43,13 @@ export const loginUser = mutationWithClientMutationId({
       return { error: 'Invalid email' };
     }
 
-    console.log(user.password);
     const isValidPassword = await compare(password, user.password);
 
     if (!isValidPassword) {
       return { error: 'Invalid email or password' };
     }
 
-    const token = jwt.sign({ email }, process.env.JWT_SECRET!, {
+    const token = jwt.sign({ id: user.id, email }, process.env.JWT_SECRET!, {
       expiresIn: '10h',
     });
 
