@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { setSignOut, setUser } from '../store/slices/userSlice';
 import { RootState, userPersistor } from '../store/store';
 
@@ -11,6 +12,7 @@ export interface IAuthResponse {
 }
 
 const useAuth = () => {
+  const navigate = useNavigate();
   const { token, email, fullName } = useSelector(
     (state: RootState) => state.user,
   );
@@ -30,8 +32,8 @@ const useAuth = () => {
 
   const signOut = async () => {
     dispatch(setSignOut());
-
     await userPersistor.purge();
+    navigate('/login');
   };
 
   return { token, email, fullName, signIn, signOut };

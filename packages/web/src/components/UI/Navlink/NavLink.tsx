@@ -7,7 +7,11 @@ type IProps = {
 };
 
 function NavLink({ path, children }: IProps) {
-  return <NavLinkStyles to={path}>{children}</NavLinkStyles>;
+  return (
+    <NavLinkStyles to={path}>
+      <span>{children}</span>
+    </NavLinkStyles>
+  );
 }
 
 export default NavLink;

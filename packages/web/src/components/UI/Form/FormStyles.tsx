@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
-import { BLUE, DARK_BLUE, WHITE } from '../../utils/colorConsts';
+import { BLUE, DARK_BLUE, WHITE } from '../../../utils/colorConsts';
 
 export const Wrapper = styled.div`
   width: 100%;

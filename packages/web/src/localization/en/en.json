@@ -5,7 +5,11 @@
   "Dashboard": {
     "title": "Dashboard"
   },
-  "Redux": {
-    "title": "Redux test"
+   "SignIn": {
+    "signIn": "Sign In",
+    "signOut": "Sign Out"
+  },
+   "SignUp": {
+    "title": "Sign Up"
   }
 }

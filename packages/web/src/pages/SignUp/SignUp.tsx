@@ -3,54 +3,54 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DefaultField } from '../../components/DefaultField/DefaultField';
 import { CircularProgress } from '@mui/material';
-import signInSchema from './SignInSchema';
-import { signInMutation } from './SignInMutation';
-import { SignInMutation } from './__generated__/SignInMutation.graphql';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import useAuth, { IAuthResponse } from '../../hooks/useAuth';
 import { useMutation } from 'react-relay';
+import { SignUpMutation } from './__generated__/SignUpMutation.graphql';
+import { signUpMutation } from './SignUpMutation';
+import signUpSchema from './SignUpSchema';
 import {
-  Wrapper,
+  Form,
   FormBox,
   PrimaryButton,
-  Form,
+  Wrapper,
 } from '../../components/UI/Form/FormStyles';
 import logo from '../../assets/logo.svg';
-
-interface SignInForm extends FieldValues {
+interface ISignUpForm extends FieldValues {
   email: string;
   password: string;
+  fullName: string;
 }
 
-export default function SignIn() {
+export default function SignUp() {
   const { signIn } = useAuth();
   const navigate = useNavigate();
 
-  const [runSignIn, isSignInLoading] =
-    useMutation<SignInMutation>(signInMutation);
+  const [runSignUp, isSignUpLoading] =
+    useMutation<SignUpMutation>(signUpMutation);
 
-  const { control, handleSubmit } = useForm<SignInForm>({
-    resolver: yupResolver(signInSchema),
+  const { control, handleSubmit } = useForm<ISignUpForm>({
+    resolver: yupResolver(signUpSchema),
   });
 
-  const onSubmit = async (formInputData: SignInForm) => {
-    runSignIn({
+  const onSubmit = async (formInputData: ISignUpForm) => {
+    runSignUp({
       variables: {
         input: {
           ...formInputData,
         },
       },
       onCompleted: (data) => {
-        if (data.loginUser?.error) {
-          toast.error('Invalid Credentials');
+        if (data.createUser?.error) {
+          toast.error('User already exists');
         }
 
-        if (data.loginUser?.token && data.loginUser.user) {
-          toast.success('Login successful');
+        if (data.createUser?.token && data.createUser.user) {
+          toast.success('Success');
           navigate('/');
 
-          signIn(data.loginUser as IAuthResponse);
+          signIn(data.createUser as IAuthResponse);
         }
       },
     });
@@ -61,6 +61,7 @@ export default function SignIn() {
       <FormBox>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <img height='110px' alt='logo' src={logo} />
+          <DefaultField name='fullName' control={control} label='Full Name' />
           <DefaultField name='email' control={control} label='Email' />
           <DefaultField
             name='password'
@@ -69,10 +70,10 @@ export default function SignIn() {
             type='password'
           />
           <PrimaryButton onClick={handleSubmit(onSubmit)}>
-            {isSignInLoading ? (
+            {isSignUpLoading ? (
               <CircularProgress size={20} sx={{ color: 'white' }} />
             ) : (
-              'Sign In'
+              'Sign Up'
             )}
           </PrimaryButton>
         </Form>
