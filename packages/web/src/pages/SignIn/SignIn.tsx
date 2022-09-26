@@ -2,8 +2,7 @@ import React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DefaultField } from '../../components/DefaultField/DefaultField';
-import { CircularProgress, Typography } from '@mui/material';
-import { DARK_BLUE } from '../../utils/colorConsts';
+import { CircularProgress } from '@mui/material';
 import signInSchema from './SignInSchema';
 import { signInMutation } from './SignInMutation';
 import { SignInMutation } from './__generated__/SignInMutation.graphql';
@@ -17,6 +16,7 @@ import {
   PrimaryButton,
   Form,
 } from '../../components/UI/Form/FormStyles';
+import logo from '../../assets/logo.svg';
 
 interface SignInForm extends FieldValues {
   email: string;
@@ -60,9 +60,7 @@ export default function SignIn() {
     <Wrapper>
       <FormBox>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Typography variant='h3' color={DARK_BLUE}>
-            Recipe Box
-          </Typography>
+          <img height='110px' alt='logo' src={logo} />
           <DefaultField name='email' control={control} label='Email' />
           <DefaultField
             name='password'

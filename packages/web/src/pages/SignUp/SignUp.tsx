@@ -2,8 +2,7 @@ import React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DefaultField } from '../../components/DefaultField/DefaultField';
-import { CircularProgress, Typography } from '@mui/material';
-import { DARK_BLUE } from '../../utils/colorConsts';
+import { CircularProgress } from '@mui/material';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import useAuth, { IAuthResponse } from '../../hooks/useAuth';
@@ -17,7 +16,7 @@ import {
   PrimaryButton,
   Wrapper,
 } from '../../components/UI/Form/FormStyles';
-
+import logo from '../../assets/logo.svg';
 interface ISignUpForm extends FieldValues {
   email: string;
   password: string;
@@ -61,9 +60,7 @@ export default function SignUp() {
     <Wrapper>
       <FormBox>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Typography variant='h3' color={DARK_BLUE}>
-            Recipe Box
-          </Typography>
+          <img height='110px' alt='logo' src={logo} />
           <DefaultField name='fullName' control={control} label='Full Name' />
           <DefaultField name='email' control={control} label='Email' />
           <DefaultField

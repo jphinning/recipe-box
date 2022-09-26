@@ -1,12 +1,22 @@
 import { Link } from 'react-router-dom';
-import { styled } from '@mui/material';
+import styled from 'styled-components';
+import { BLUE, TEXT_GRAY } from '../../../utils/colorConsts';
 
 export const NavLinkStyles = styled(Link)`
-  color: white;
-  font-size: 24px;
-  font-weight: 600;
-  &:hover,
-  &:active {
-    color: lightgrey;
+  display: flex;
+  align-items: center;
+  text-decoration: inherit;
+  color: ${TEXT_GRAY};
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  padding-block: 5px;
+  &:hover {
+    border-bottom: 3px solid ${BLUE};
+    color: ${BLUE};
+  }
+  &:focus {
+    color: ${BLUE};
+    border-bottom: 3px solid ${BLUE};
   }
 `;
