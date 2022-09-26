@@ -1,37 +1,30 @@
-import { Box, Divider } from '@mui/material';
 import React from 'react';
+import { HomeWrapper } from './HomeStyles';
 import { useLazyLoadQuery } from 'react-relay';
-import { AllUsers } from './AllUsers';
-import { AllUsersQuery } from './__generated__/AllUsersQuery.graphql';
+import { findAllRecipesQuery } from './FindAllRecipes';
+import { FindAllRecipesQuery } from './__generated__/FindAllRecipesQuery.graphql';
+import { RecipeCard } from '../../components/RecipeCard/RecipeCard';
+import { CreateRecipe } from '../../components/CreateRecipe/CreateRecipe';
 
 function Home() {
-  const resonse = useLazyLoadQuery<AllUsersQuery>(
-    AllUsers,
+  const res = useLazyLoadQuery<FindAllRecipesQuery>(
+    findAllRecipesQuery,
     { first: 5 },
     {
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'store-or-network',
     },
   );
 
-  const { findAllUsers } = resonse;
-
-  if (!findAllUsers?.edges?.length) return <Box>Nothing</Box>;
+  const { findAllRecipes } = res;
 
   return (
     <>
-      <Box>Home</Box>
-      {findAllUsers?.edges?.map((edge) => {
-        if (!edge?.node) return null;
-
-        return (
-          <Box key={edge.node?.id}>
-            <Box>id: {edge?.node.id}</Box>
-            <Box>email: {edge?.node.email}</Box>
-            <Box>fullName: {edge?.node.fullName}</Box>
-            <Divider />
-          </Box>
-        );
-      })}
+      <CreateRecipe />
+      <HomeWrapper>
+        {findAllRecipes?.edges?.map((edge) => {
+          return <RecipeCard key={edge?.node?.id} data={edge?.node!} />;
+        })}
+      </HomeWrapper>
     </>
   );
 }

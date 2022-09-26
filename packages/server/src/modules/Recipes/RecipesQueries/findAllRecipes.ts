@@ -13,7 +13,7 @@ export const findAllRecipes: GraphQLFieldConfig<any, any, any> = {
         error: 'Unauthorized',
       };
     }
-    const recipes = await RecipesModel.find({});
+    const recipes = await RecipesModel.find({}).sort({ createdAt: 'desc' });
 
     return connectionFromArray(recipes, args);
   },

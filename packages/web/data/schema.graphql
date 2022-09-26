@@ -128,8 +128,11 @@ type Recipes implements Node {
   """The ID of an object"""
   id: ID!
   title: String!
+  description: String
   ingredients: [String]!
   instructions: [String]!
+  createdAt: String
+  updatedAt: String
   userId: User!
 }
 
@@ -216,6 +219,9 @@ input createRecipeInput {
   """Recipe title"""
   title: String!
 
+  """Recipe description"""
+  description: String
+
   """Recipe ingredients"""
   ingredients: [String]!
 
@@ -246,6 +252,9 @@ input updateRecipeInput {
 
   """Recipe title"""
   title: String!
+
+  """Recipe description"""
+  description: String
 
   """Recipe ingredients"""
   ingredients: [String]!
