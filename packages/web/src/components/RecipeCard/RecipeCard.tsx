@@ -1,23 +1,39 @@
+/* eslint-disable camelcase */
 import React from 'react';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { Avatar, Box, IconButton, Stack, Typography } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { TEXT_GRAY } from '../../utils/colorConsts';
 import { CardHeader, RecipeWrapper } from './RecipeCardStyles';
+import { useFragment } from 'react-relay';
+import { RecipeCardFragment_recipes$key } from './__generated__/RecipeCardFragment_recipes.graphql';
+import { RecipeCardFragment } from './RecipeCardFragment';
 
-export const RecipeCard = () => {
+dayjs.extend(relativeTime);
+interface IRecipeCardProps {
+  data: RecipeCardFragment_recipes$key;
+}
+
+export const RecipeCard = ({ data }: IRecipeCardProps) => {
+  const res = useFragment<RecipeCardFragment_recipes$key>(
+    RecipeCardFragment,
+    data,
+  );
+
   return (
     <RecipeWrapper>
       <CardHeader>
         <Avatar>H</Avatar>
         <div>
-          <Typography sx={{ fontWeight: 600 }}>Title</Typography>
+          <Typography sx={{ fontWeight: 600 }}>{res.title}</Typography>
           <Typography
             variant='caption'
             sx={{ fontWeight: 200, color: TEXT_GRAY }}
           >
-            Full name 3h ago
+            {res.userId.fullName} {dayjs(Number(res.createdAt)).fromNow()}
           </Typography>
         </div>
         <Box sx={{ marginLeft: 'auto' }}>
@@ -27,14 +43,11 @@ export const RecipeCard = () => {
         </Box>
       </CardHeader>
 
-      <img src='/src/assets/paella.jpg' />
-
       <Stack sx={{ color: TEXT_GRAY }} spacing={2}>
         <Typography variant='body2' color='text.secondary'>
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {res.description}
         </Typography>
+        <img src='/src/assets/burrito.webp' />
         <Stack direction='row'>
           <IconButton aria-label='add to favorites'>
             <FavoriteIcon />

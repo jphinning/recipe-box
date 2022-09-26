@@ -17,6 +17,7 @@
     "@mui/material": "^5.10.6",
     "@mui/styled-engine-sc": "^5.10.6",
     "@reduxjs/toolkit": "^1.8.5",
+    "dayjs": "^1.11.5",
     "i18next": "^21.9.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
