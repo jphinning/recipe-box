@@ -226,7 +226,7 @@ input createRecipeInput {
   ingredients: [String]!
 
   """Recipe instructions"""
-  instructions: String!
+  instructions: [String]!
   clientMutationId: String
 }
 

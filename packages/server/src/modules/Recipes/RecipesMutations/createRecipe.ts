@@ -27,7 +27,7 @@ export const createRecipe = mutationWithClientMutationId({
       description: 'Recipe ingredients',
     },
     instructions: {
-      type: new GraphQLNonNull(GraphQLString),
+      type: new GraphQLNonNull(new GraphQLList(GraphQLString)),
       description: 'Recipe instructions',
     },
   },

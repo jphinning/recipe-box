@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import {
+  CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -9,29 +10,56 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+import { useMutation } from 'react-relay';
+import { toast } from 'react-toastify';
 import { DefaultField } from '../DefaultField/DefaultField';
 import { Form, PrimaryButton } from '../UI/Form/FormStyles';
+import { createRecipeMutation } from './CreateRecipeMutation';
 import createRecipeSchema from './CreateRecipeSchema';
 import { AddButton } from './CreateRecipeStyles';
+import { CreateRecipeMutation } from './__generated__/CreateRecipeMutation.graphql';
 
 const actions = [
   { icon: <AddCircleOutlineRoundedIcon />, name: 'Create new Recipe' },
 ];
 
 interface CreateRecipeForm extends FieldValues {
-  email: string;
-  password: string;
+  title: string;
+  description: string;
+  ingredients: string[];
+  instructions: string[];
 }
 
 export const CreateRecipe = () => {
   const [open, setOpen] = useState<boolean>(false);
 
-  const { control, handleSubmit } = useForm<CreateRecipeForm>({
+  const { control, handleSubmit, reset } = useForm<CreateRecipeForm>({
     resolver: yupResolver(createRecipeSchema),
   });
 
+  const [runCreateRecipe, isCreateRecipeLoading] =
+    useMutation<CreateRecipeMutation>(createRecipeMutation);
+
   const onSubmit = async (formInputData: CreateRecipeForm) => {
-    console.log(formInputData);
+    runCreateRecipe({
+      variables: {
+        input: {
+          ...formInputData,
+          instructions: ['uno'],
+          ingredients: ['uno'],
+        },
+      },
+      onCompleted: (data) => {
+        if (data.createRecipe?.error) {
+          toast.error('Server error, please try again');
+        }
+
+        if (data.createRecipe?.recipe) {
+          toast.success('Post Created');
+        }
+      },
+    });
+    reset();
     setOpen(false);
   };
 
@@ -58,12 +86,11 @@ export const CreateRecipe = () => {
               label='Description'
             />
             <PrimaryButton onClick={handleSubmit(onSubmit)}>
-              {/* {isSignInLoading ? (
-                  <CircularProgress size={20} sx={{ color: 'white' }} />
-                ) : (
-                  'Sign In'
-                )} */}
-              Create
+              {isCreateRecipeLoading ? (
+                <CircularProgress size={20} sx={{ color: 'white' }} />
+              ) : (
+                'Create Recipe'
+              )}
             </PrimaryButton>
           </Form>
         </DialogContent>

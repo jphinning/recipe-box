@@ -7,13 +7,9 @@ import { RecipeCard } from '../../components/RecipeCard/RecipeCard';
 import { CreateRecipe } from '../../components/CreateRecipe/CreateRecipe';
 
 function Home() {
-  const res = useLazyLoadQuery<FindAllRecipesQuery>(
-    findAllRecipesQuery,
-    { first: 5 },
-    {
-      fetchPolicy: 'store-or-network',
-    },
-  );
+  const res = useLazyLoadQuery<FindAllRecipesQuery>(findAllRecipesQuery, {
+    first: 5,
+  });
 
   const { findAllRecipes } = res;
 
