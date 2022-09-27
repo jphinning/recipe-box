@@ -7,19 +7,15 @@ import { RecipeCard } from '../../components/RecipeCard/RecipeCard';
 import { CreateRecipe } from '../../components/CreateRecipe/CreateRecipe';
 
 function Home() {
-  const res = useLazyLoadQuery<FindAllRecipesQuery>(
-    findAllRecipesQuery,
-    { first: 5 },
-    {
-      fetchPolicy: 'store-or-network',
-    },
-  );
+  const res = useLazyLoadQuery<FindAllRecipesQuery>(findAllRecipesQuery, {
+    first: 5,
+  });
 
   const { findAllRecipes } = res;
 
   return (
     <>
-      <CreateRecipe />
+      <CreateRecipe id={findAllRecipes?.__id} />
       <HomeWrapper>
         {findAllRecipes?.edges?.map((edge) => {
           return <RecipeCard key={edge?.node?.id} data={edge?.node!} />;

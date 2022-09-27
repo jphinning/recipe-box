@@ -1,55 +1,101 @@
-import AddIcon from '@mui/icons-material/Add';
-import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
-import { ListItemIcon, Menu, MenuItem } from '@mui/material';
+import { yupResolver } from '@hookform/resolvers/yup';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import {
+  CircularProgress,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  SpeedDialAction,
+  SpeedDialIcon,
+} from '@mui/material';
 import React, { useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
+import { useMutation } from 'react-relay';
+import { toast } from 'react-toastify';
+import { DefaultField } from '../DefaultField/DefaultField';
+import { Form, PrimaryButton } from '../UI/Form/FormStyles';
+import { createRecipeMutation } from './CreateRecipeMutation';
+import createRecipeSchema from './CreateRecipeSchema';
 import { AddButton } from './CreateRecipeStyles';
-import Fade from '@mui/material/Fade';
-import { TEXT_GRAY } from '../../utils/colorConsts';
+import { CreateRecipeMutation } from './__generated__/CreateRecipeMutation.graphql';
 
-export const CreateRecipe = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+const actions = [
+  { icon: <AddCircleOutlineRoundedIcon />, name: 'Create new Recipe' },
+];
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
+interface CreateRecipeForm extends FieldValues {
+  title: string;
+  description: string;
+  ingredients: string[];
+  instructions: string[];
+}
+
+export const CreateRecipe = ({ id }: { id: string | undefined }) => {
+  const [open, setOpen] = useState<boolean>(false);
+
+  const { control, handleSubmit, reset } = useForm<CreateRecipeForm>({
+    resolver: yupResolver(createRecipeSchema),
+  });
+
+  const [runCreateRecipe, isCreateRecipeLoading] =
+    useMutation<CreateRecipeMutation>(createRecipeMutation);
+
+  const onSubmit = async (formInputData: CreateRecipeForm) => {
+    runCreateRecipe({
+      variables: {
+        input: {
+          ...formInputData,
+          instructions: ['uno'],
+          ingredients: ['uno'],
+        },
+        connections: id ? [id] : [],
+      },
+      onCompleted: (data) => {
+        if (data.createRecipe?.error) {
+          toast.error('Server error, please try again');
+        }
+
+        if (data.createRecipe?.recipe) {
+          toast.success('Post Created');
+        }
+      },
+    });
+    reset();
+    setOpen(false);
   };
 
   return (
     <>
-      <AddButton onClick={handleClick} aria-label='add' size='large'>
-        <AddIcon fontSize='large' />
+      <AddButton ariaLabel='SpeedDial' icon={<SpeedDialIcon />}>
+        {actions.map((action) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+            onClick={() => setOpen(true)}
+          />
+        ))}
       </AddButton>
-      <Menu
-        id='fade-menu'
-        MenuListProps={{
-          'aria-labelledby': 'fade-button',
-        }}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Fade}
-      >
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <AddCircleOutlinedIcon
-              fontSize='medium'
-              sx={{ color: TEXT_GRAY }}
+      <Dialog open={open} onClose={() => setOpen(false)} fullWidth>
+        <DialogTitle>Create new recipe</DialogTitle>
+        <DialogContent dividers>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <DefaultField name='title' control={control} label='Title' />
+            <DefaultField
+              name='description'
+              control={control}
+              label='Description'
             />
-          </ListItemIcon>
-          Add Recipe
-        </MenuItem>
-      </Menu>
+            <PrimaryButton onClick={handleSubmit(onSubmit)}>
+              {isCreateRecipeLoading ? (
+                <CircularProgress size={20} sx={{ color: 'white' }} />
+              ) : (
+                'Create Recipe'
+              )}
+            </PrimaryButton>
+          </Form>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
