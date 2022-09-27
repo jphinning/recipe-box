@@ -1,9 +1,13 @@
 import { graphql } from 'react-relay';
 
 export const createRecipeMutation = graphql`
-  mutation CreateRecipeMutation($input: createRecipeInput!) {
+  mutation CreateRecipeMutation(
+    $input: createRecipeInput!
+    $connections: [ID!]!
+  ) {
     createRecipe(input: $input) {
-      recipe {
+      recipe
+        @prependNode(connections: $connections, edgeTypeName: "RecipesEdge") {
         id
         title
         description

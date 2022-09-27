@@ -30,7 +30,7 @@ interface CreateRecipeForm extends FieldValues {
   instructions: string[];
 }
 
-export const CreateRecipe = () => {
+export const CreateRecipe = ({ id }: { id: string | undefined }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const { control, handleSubmit, reset } = useForm<CreateRecipeForm>({
@@ -48,6 +48,7 @@ export const CreateRecipe = () => {
           instructions: ['uno'],
           ingredients: ['uno'],
         },
+        connections: id ? [id] : [],
       },
       onCompleted: (data) => {
         if (data.createRecipe?.error) {

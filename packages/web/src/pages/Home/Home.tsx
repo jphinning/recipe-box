@@ -15,7 +15,7 @@ function Home() {
 
   return (
     <>
-      <CreateRecipe />
+      <CreateRecipe id={findAllRecipes?.__id} />
       <HomeWrapper>
         {findAllRecipes?.edges?.map((edge) => {
           return <RecipeCard key={edge?.node?.id} data={edge?.node!} />;

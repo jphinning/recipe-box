@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<76ceef18537ce8e68d0b9a380a3cf244>>
+ * @generated SignedSource<<17f3570ae550874fef1cd7e837dcf04c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type FindAllRecipesQuery$variables = {
 };
 export type FindAllRecipesQuery$data = {
   readonly findAllRecipes: {
+    readonly __id: string;
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly id: string;
@@ -36,20 +37,71 @@ var v0 = [
     "name": "first"
   }
 ],
-v1 = [
-  {
-    "kind": "Variable",
-    "name": "first",
-    "variableName": "first"
-  }
-],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "PageInfo",
+  "kind": "LinkedField",
+  "name": "pageInfo",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "endCursor",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasNextPage",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v5 = {
+  "kind": "ClientExtension",
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "__id",
+      "storageKey": null
+    }
+  ]
+},
+v6 = [
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "first"
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -58,11 +110,11 @@ return {
     "name": "FindAllRecipesQuery",
     "selections": [
       {
-        "alias": null,
-        "args": (v1/*: any*/),
+        "alias": "findAllRecipes",
+        "args": null,
         "concreteType": "RecipesConnection",
         "kind": "LinkedField",
-        "name": "findAllRecipes",
+        "name": "__FindAllRecipesQuery_findAllRecipes_connection",
         "plural": false,
         "selections": [
           {
@@ -81,18 +133,22 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
+                  (v1/*: any*/),
                   {
                     "args": null,
                     "kind": "FragmentSpread",
                     "name": "RecipeCardFragment_recipes"
-                  }
+                  },
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
-              }
+              },
+              (v3/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v4/*: any*/),
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
@@ -108,7 +164,7 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v6/*: any*/),
         "concreteType": "RecipesConnection",
         "kind": "LinkedField",
         "name": "findAllRecipes",
@@ -130,7 +186,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -160,7 +216,7 @@ return {
                     "name": "userId",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -170,29 +226,53 @@ return {
                       }
                     ],
                     "storageKey": null
-                  }
+                  },
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
-              }
+              },
+              (v3/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v4/*: any*/),
+          (v5/*: any*/)
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": (v6/*: any*/),
+        "filters": null,
+        "handle": "connection",
+        "key": "FindAllRecipesQuery_findAllRecipes",
+        "kind": "LinkedHandle",
+        "name": "findAllRecipes"
       }
     ]
   },
   "params": {
-    "cacheID": "fc28d0984bc976d976ecfce00cd73909",
+    "cacheID": "c435e01a20fbe1f34c144a9d22f57077",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "connection": [
+        {
+          "count": "first",
+          "cursor": null,
+          "direction": "forward",
+          "path": [
+            "findAllRecipes"
+          ]
+        }
+      ]
+    },
     "name": "FindAllRecipesQuery",
     "operationKind": "query",
-    "text": "query FindAllRecipesQuery(\n  $first: Int\n) {\n  findAllRecipes(first: $first) {\n    edges {\n      node {\n        id\n        ...RecipeCardFragment_recipes\n      }\n    }\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  createdAt\n  userId {\n    id\n    fullName\n  }\n}\n"
+    "text": "query FindAllRecipesQuery(\n  $first: Int\n) {\n  findAllRecipes(first: $first) {\n    edges {\n      node {\n        id\n        ...RecipeCardFragment_recipes\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  createdAt\n  userId {\n    id\n    fullName\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c933c90c1e162f115eb239f8c7af5a59";
+(node as any).hash = "e122957f5ba1d5a0a36ba2e192dc4bc1";
 
 export default node;
