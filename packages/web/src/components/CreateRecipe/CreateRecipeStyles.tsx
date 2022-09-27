@@ -1,13 +1,7 @@
 import styled from '@emotion/styled';
-import { IconButton } from '@mui/material';
-import { BLUE, BOX_BACKGROUND, DARK_BLUE } from '../../utils/colorConsts';
+import { SpeedDial } from '@mui/material';
 
-export const AddButton = styled(IconButton)`
-  background-color: ${BLUE};
-  color: ${BOX_BACKGROUND};
-  &:hover {
-    background-color: ${DARK_BLUE};
-  }
+export const AddButton = styled(SpeedDial)`
   position: fixed;
   bottom: 20px;
   left: 90%;
