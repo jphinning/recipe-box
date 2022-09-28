@@ -30,8 +30,6 @@ const AllRecipesFeed = ({ query }: IAllRecipesFeedProps) => {
     }
   }, [isLoadingNext, loadNext]);
 
-  console.log(findAllRecipes?.pageInfo.hasNextPage);
-
   return (
     <>
       <CreateRecipe id={findAllRecipes?.__id} />
