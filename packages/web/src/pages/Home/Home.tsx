@@ -1,25 +1,23 @@
 import React from 'react';
 import { HomeWrapper } from './HomeStyles';
-import { useLazyLoadQuery } from 'react-relay';
-import { findAllRecipesQuery } from './FindAllRecipes';
-import { FindAllRecipesQuery } from './__generated__/FindAllRecipesQuery.graphql';
-import { RecipeCard } from '../../components/RecipeCard/RecipeCard';
-import { CreateRecipe } from '../../components/CreateRecipe/CreateRecipe';
+import { graphql, useLazyLoadQuery } from 'react-relay';
+import { HomeQuery } from './__generated__/HomeQuery.graphql';
+import AllRecipesFeed from '../../components/AllRecipesFeed.tsx/AllRecipesFeed';
 
 function Home() {
-  const res = useLazyLoadQuery<FindAllRecipesQuery>(findAllRecipesQuery, {
-    first: 5,
-  });
-
-  const { findAllRecipes } = res;
+  const res = useLazyLoadQuery<HomeQuery>(
+    graphql`
+      query HomeQuery {
+        ...FindAllRecipes_query
+      }
+    `,
+    {},
+  );
 
   return (
     <>
-      <CreateRecipe id={findAllRecipes?.__id} />
       <HomeWrapper>
-        {findAllRecipes?.edges?.map((edge) => {
-          return <RecipeCard key={edge?.node?.id} data={edge?.node!} />;
-        })}
+        <AllRecipesFeed query={res} />
       </HomeWrapper>
     </>
   );
