@@ -12,6 +12,7 @@ export const RecipeWrapper = styled(Box)`
   padding: 20px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 4px;
   row-gap: 15px;
+  overflow-wrap: break-word;
 `;
 
 export const CardHeader = styled.div`

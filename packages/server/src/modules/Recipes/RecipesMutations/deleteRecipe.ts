@@ -1,4 +1,4 @@
-import { GraphQLID, GraphQLString } from 'graphql';
+import { GraphQLID } from 'graphql';
 import { fromGlobalId, mutationWithClientMutationId } from 'graphql-relay';
 import { errorField } from '../../../graphql/errorField';
 import { IAuthContext } from '../../User/auth/findCurrentUser';
@@ -10,9 +10,9 @@ export const deleteRecipe = mutationWithClientMutationId({
     globalId: { type: GraphQLID },
   },
   outputFields: {
-    deletedOutput: {
-      type: GraphQLString,
-      resolve: (response) => response.deletedCount,
+    recipeId: {
+      type: GraphQLID,
+      resolve: (response) => response,
     },
     ...errorField,
   },
@@ -24,7 +24,14 @@ export const deleteRecipe = mutationWithClientMutationId({
     }
 
     const { id } = fromGlobalId(globalId);
+    const recipe = await RecipesModel.findById(id);
 
-    return await RecipesModel.deleteOne({ _id: id });
+    if (!recipe) {
+      return { error: 'No recipe was found' };
+    }
+
+    await RecipesModel.deleteOne({ _id: id });
+
+    return globalId;
   },
 });

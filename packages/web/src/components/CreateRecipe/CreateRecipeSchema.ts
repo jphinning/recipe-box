@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 const createRecipeSchema = yup.object({
-  title: yup.string().required('Insert a title'),
+  title: yup.string().required('Insert a title').max(45, 'Max limit reached'),
   description: yup
     .string()
     .required('Insert a description')

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2d00f43c6417835b826aa32a65d2c370>>
+ * @generated SignedSource<<b1744eee58ed37b99773c499e7cdeedf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,24 +10,44 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeQuery$variables = {};
-export type HomeQuery$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"FindAllRecipes_query">;
+export type MyRecipesQuery$variables = {
+  after?: string | null;
+  first?: number | null;
 };
-export type HomeQuery = {
-  response: HomeQuery$data;
-  variables: HomeQuery$variables;
+export type MyRecipesQuery$data = {
+  readonly " $fragmentSpreads": FragmentRefs<"MyRecipes_query">;
+};
+export type MyRecipesQuery = {
+  response: MyRecipesQuery$data;
+  variables: MyRecipesQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "first",
-    "value": 10
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after"
+  },
+  {
+    "defaultValue": 10,
+    "kind": "LocalArgument",
+    "name": "first"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "after"
+  },
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "first"
+  }
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -36,15 +56,15 @@ v1 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "HomeQuery",
+    "name": "MyRecipesQuery",
     "selections": [
       {
-        "args": null,
+        "args": (v1/*: any*/),
         "kind": "FragmentSpread",
-        "name": "FindAllRecipes_query"
+        "name": "MyRecipes_query"
       }
     ],
     "type": "Query",
@@ -52,16 +72,16 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "HomeQuery",
+    "name": "MyRecipesQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "RecipesConnection",
         "kind": "LinkedField",
-        "name": "findAllRecipes",
+        "name": "findMyRecipes",
         "plural": false,
         "selections": [
           {
@@ -119,7 +139,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v1/*: any*/),
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -170,7 +190,7 @@ return {
                     "name": "userId",
                     "plural": false,
                     "selections": [
-                      (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -221,30 +241,30 @@ return {
             ]
           }
         ],
-        "storageKey": "findAllRecipes(first:10)"
+        "storageKey": null
       },
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "filters": [],
         "handle": "connection",
-        "key": "FindAllRecipesQuery_findAllRecipes",
+        "key": "MyRecipesQuery_findMyRecipes",
         "kind": "LinkedHandle",
-        "name": "findAllRecipes"
+        "name": "findMyRecipes"
       }
     ]
   },
   "params": {
-    "cacheID": "832872d97dfcc7db8fdb8210ab8ed700",
+    "cacheID": "be6abc594b5a0e793baa1cdaf914bf42",
     "id": null,
     "metadata": {},
-    "name": "HomeQuery",
+    "name": "MyRecipesQuery",
     "operationKind": "query",
-    "text": "query HomeQuery {\n  ...FindAllRecipes_query\n}\n\nfragment FindAllRecipes_query on Query {\n  findAllRecipes(first: 10) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...RecipeCardFragment_recipes\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  createdAt\n  updatedAt\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
+    "text": "query MyRecipesQuery(\n  $after: String\n  $first: Int = 10\n) {\n  ...MyRecipes_query_2HEEH6\n}\n\nfragment MyRecipes_query_2HEEH6 on Query {\n  findMyRecipes(first: $first, after: $after) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...RecipeCardFragment_recipes\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  createdAt\n  updatedAt\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "bb22e448beba1a0f5d30b5a6d1292203";
+(node as any).hash = "f7921e06843ef7c4f02b6ec65eb1a429";
 
 export default node;

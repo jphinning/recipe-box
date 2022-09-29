@@ -4,7 +4,7 @@ import { IAuthContext } from '../../User/auth/findCurrentUser';
 import { RecipesModel } from '../recipesModel';
 import { RecipesConnection } from '../recipesType';
 
-export const findAllRecipes: GraphQLFieldConfig<any, any, any> = {
+export const findMyRecipes: GraphQLFieldConfig<any, any, any> = {
   type: RecipesConnection,
   args: connectionArgs,
   resolve: async (_, args, ctx: IAuthContext) => {
@@ -13,7 +13,9 @@ export const findAllRecipes: GraphQLFieldConfig<any, any, any> = {
         error: 'Unauthorized',
       };
     }
-    const recipes = await RecipesModel.find({}).sort({ updatedAt: 'desc' });
+    const recipes = await RecipesModel.find({ userId: ctx.user.id }).sort({
+      updatedAt: 'desc',
+    });
 
     return connectionFromArray(recipes, args);
   },
