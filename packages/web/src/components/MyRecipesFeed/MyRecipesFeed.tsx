@@ -2,25 +2,25 @@
 import React, { useCallback } from 'react';
 
 import { usePaginationFragment } from 'react-relay';
-import { findAllRecipesQuery } from './FindAllRecipes';
-import { FindAllRecipes_query$key } from './__generated__/FindAllRecipes_query.graphql';
-import { FindAllRecipesQuery } from './__generated__/FindAllRecipesQuery.graphql';
 import { RecipeCard } from '../RecipeCard/RecipeCard';
 import { CreateRecipe } from '../CreateRecipe/CreateRecipe';
 import { CircularProgress } from '@mui/material';
 import { PrimaryButton } from '../UI/Form/FormStyles';
+import { MyRecipes_query$key } from './__generated__/MyRecipes_query.graphql';
+import { MyRecipesQuery } from './__generated__/MyRecipesQuery.graphql';
+import { myRecipesQuery } from './MyRecipes';
 
-interface IAllRecipesFeedProps {
-  query: FindAllRecipes_query$key;
+interface IMyRecipesFeedProps {
+  query: MyRecipes_query$key;
 }
 
-const AllRecipesFeed = ({ query }: IAllRecipesFeedProps) => {
+const MyRecipesFeed = ({ query }: IMyRecipesFeedProps) => {
   const { data, hasNext, isLoadingNext, loadNext } = usePaginationFragment<
-    FindAllRecipesQuery,
-    FindAllRecipes_query$key
-  >(findAllRecipesQuery, query);
+    MyRecipesQuery,
+    MyRecipes_query$key
+  >(myRecipesQuery, query);
 
-  const { findAllRecipes } = data;
+  const { findMyRecipes } = data;
 
   const loadMore = useCallback(() => {
     if (!hasNext) return;
@@ -32,11 +32,10 @@ const AllRecipesFeed = ({ query }: IAllRecipesFeedProps) => {
 
   return (
     <>
-      {hasNext && <CreateRecipe id={findAllRecipes?.__id} />}
-      {findAllRecipes?.edges?.map((edge) => {
+      <CreateRecipe id={findMyRecipes?.__id} />
+      {findMyRecipes?.edges?.map((edge) => {
         return <RecipeCard key={edge?.node?.id} data={edge?.node!} />;
       })}
-
       {hasNext && (
         <PrimaryButton onClick={loadMore}>
           {isLoadingNext ? (
@@ -50,4 +49,4 @@ const AllRecipesFeed = ({ query }: IAllRecipesFeedProps) => {
   );
 };
 
-export default AllRecipesFeed;
+export default MyRecipesFeed;

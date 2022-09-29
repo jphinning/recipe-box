@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import RequireAuth from '../router/RequireAuth';
 import SignedRouteBlocker from '../router/SignedRouteBlocker';
-import Dashboard from './Dashboard';
+import Dashboard from './MyPosts/MyPosts';
 import Home from './Home/Home';
 import SignIn from './SignIn/SignIn';
 import SignUp from './SignUp/SignUp';
