@@ -8,7 +8,7 @@ export const fetchGraphQL = async (
 ) => {
   const { token } = (store.getState() as RootState).user;
 
-  const response = await fetch('http://localhost:4000/graphql', {
+  const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/graphql`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',

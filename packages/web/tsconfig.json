@@ -2,13 +2,14 @@
   "extends": "../../tsconfig.json",
    "compilerOptions": {
     "composite": true,
-    "module": "commonjs",
-    "target": "es2016",
+    "module": "esnext",
+    "target": "esnext",
     "outDir": "./dist",
     "rootDir": "./src",
     "esModuleInterop": true,
     "isolatedModules": true,
-    "strict": true
+    "strict": true,
+    "moduleResolution": "Node"
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
