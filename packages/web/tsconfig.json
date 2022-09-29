@@ -2,13 +2,13 @@
   "extends": "../../tsconfig.json",
    "compilerOptions": {
     "composite": true,
-    "module": "ES2020",
-    "target": "ES2020",
-    "outDir": "build",
+    "module": "commonjs",
+    "target": "es2016",
+    "outDir": "./dist",
     "rootDir": "./src",
     "esModuleInterop": true,
     "isolatedModules": true,
-    "allowJs": true
+    "strict": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

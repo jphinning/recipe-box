@@ -12,6 +12,7 @@ import { RecipeCardFragment_recipes$key } from './__generated__/RecipeCardFragme
 import { RecipeCardFragment } from './RecipeCardFragment';
 import MenuIcon from '../UI/MenuIcon/MenuIcon';
 import useAuth from '../../hooks/useAuth';
+import burrito from '../../assets/burrito.webp';
 
 dayjs.extend(relativeTime);
 interface IRecipeCardProps {
@@ -52,7 +53,7 @@ export const RecipeCard = ({ data, globalId, edgeId }: IRecipeCardProps) => {
         <Typography variant='body2' color='text.secondary'>
           {res.description}
         </Typography>
-        <img src='/src/assets/burrito.webp' />
+        <img src={burrito} />
         <Stack direction='row'>
           <IconButton aria-label='add to favorites'>
             <FavoriteIcon />
