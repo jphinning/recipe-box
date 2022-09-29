@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fdc23529078479173be68c5ad9092b31>>
+ * @generated SignedSource<<711e8b1e6c5b722392d255421c193c96>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -151,6 +151,20 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "createdAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "updatedAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "concreteType": "User",
                     "kind": "LinkedField",
                     "name": "userId",
@@ -221,12 +235,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1288c9a0b76fd66abfbb3cdb7c53b1c5",
+    "cacheID": "24aa2aad283f6fa0381731b86061042e",
     "id": null,
     "metadata": {},
     "name": "MyPostsQuery",
     "operationKind": "query",
-    "text": "query MyPostsQuery {\n  ...MyRecipes_query\n}\n\nfragment MyRecipes_query on Query {\n  findMyRecipes(first: 10) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...RecipeCardFragment_recipes\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
+    "text": "query MyPostsQuery {\n  ...MyRecipes_query\n}\n\nfragment MyRecipes_query on Query {\n  findMyRecipes(first: 10) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...RecipeCardFragment_recipes\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  createdAt\n  updatedAt\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
   }
 };
 })();

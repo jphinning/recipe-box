@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<14004eb08858e52bb76050b90dda769d>>
+ * @generated SignedSource<<b1744eee58ed37b99773c499e7cdeedf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -171,6 +171,20 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "createdAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "updatedAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "concreteType": "User",
                     "kind": "LinkedField",
                     "name": "userId",
@@ -241,12 +255,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ee1073d683e947b2a06a52f59fa97873",
+    "cacheID": "be6abc594b5a0e793baa1cdaf914bf42",
     "id": null,
     "metadata": {},
     "name": "MyRecipesQuery",
     "operationKind": "query",
-    "text": "query MyRecipesQuery(\n  $after: String\n  $first: Int = 10\n) {\n  ...MyRecipes_query_2HEEH6\n}\n\nfragment MyRecipes_query_2HEEH6 on Query {\n  findMyRecipes(first: $first, after: $after) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...RecipeCardFragment_recipes\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
+    "text": "query MyRecipesQuery(\n  $after: String\n  $first: Int = 10\n) {\n  ...MyRecipes_query_2HEEH6\n}\n\nfragment MyRecipes_query_2HEEH6 on Query {\n  findMyRecipes(first: $first, after: $after) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...RecipeCardFragment_recipes\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  createdAt\n  updatedAt\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
   }
 };
 })();

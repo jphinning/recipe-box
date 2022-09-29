@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c7b9a1eeeab1bd996966ccb2d5a68a6b>>
+ * @generated SignedSource<<d6dc624773dd169a5fd2f705774b52da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -171,6 +171,20 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "createdAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "updatedAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "concreteType": "User",
                     "kind": "LinkedField",
                     "name": "userId",
@@ -241,12 +255,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "09954463398b5cce2630e991ab135220",
+    "cacheID": "3d988f43ce87ee3f1b4b2928eb119afe",
     "id": null,
     "metadata": {},
     "name": "FindAllRecipesQuery",
     "operationKind": "query",
-    "text": "query FindAllRecipesQuery(\n  $after: String\n  $first: Int = 10\n) {\n  ...FindAllRecipes_query_2HEEH6\n}\n\nfragment FindAllRecipes_query_2HEEH6 on Query {\n  findAllRecipes(first: $first, after: $after) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...RecipeCardFragment_recipes\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
+    "text": "query FindAllRecipesQuery(\n  $after: String\n  $first: Int = 10\n) {\n  ...FindAllRecipes_query_2HEEH6\n}\n\nfragment FindAllRecipes_query_2HEEH6 on Query {\n  findAllRecipes(first: $first, after: $after) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...RecipeCardFragment_recipes\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  createdAt\n  updatedAt\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
   }
 };
 })();

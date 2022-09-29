@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<64897f64ab80495ee2721648b4f197b4>>
+ * @generated SignedSource<<c076a38109b078ab66d9b389a2ef2469>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -165,6 +165,20 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "kind": "ScalarField",
+                "name": "createdAt",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "updatedAt",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "User",
                 "kind": "LinkedField",
                 "name": "userId",
@@ -219,12 +233,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b849c871da8d2b0b6b42156c2af555ad",
+    "cacheID": "9fd7dac79404539c040a81e6b2ceb9df",
     "id": null,
     "metadata": {},
     "name": "CreateRecipeMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateRecipeMutation(\n  $input: createRecipeInput!\n) {\n  createRecipe(input: $input) {\n    recipe {\n      ...RecipeCardFragment_recipes\n      id\n    }\n    error\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
+    "text": "mutation CreateRecipeMutation(\n  $input: createRecipeInput!\n) {\n  createRecipe(input: $input) {\n    recipe {\n      ...RecipeCardFragment_recipes\n      id\n    }\n    error\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  createdAt\n  updatedAt\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
   }
 };
 })();

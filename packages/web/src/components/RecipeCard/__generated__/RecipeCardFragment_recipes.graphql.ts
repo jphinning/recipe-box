@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6ae8b75069ed9923df704a0a1c826e02>>
+ * @generated SignedSource<<adca04bbceb42ce5053e523acbe7ba6d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RecipeCardFragment_recipes$data = {
+  readonly createdAt: string | null;
   readonly description: string | null;
   readonly id: string;
   readonly ingredients: ReadonlyArray<string | null>;
   readonly instructions: ReadonlyArray<string | null>;
   readonly title: string;
+  readonly updatedAt: string | null;
   readonly userId: {
     readonly email: string | null;
     readonly fullName: string | null;
@@ -74,6 +76,20 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "createdAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "updatedAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "User",
       "kind": "LinkedField",
       "name": "userId",
@@ -103,6 +119,6 @@ return {
 };
 })();
 
-(node as any).hash = "2fd18ef34ab0a4631fe865766618f56b";
+(node as any).hash = "94e4919270f11f4f89b7d22f80ae3515";
 
 export default node;

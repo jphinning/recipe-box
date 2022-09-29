@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<49e8c010dcb798a4a67ee7081a4c6815>>
+ * @generated SignedSource<<5c21a7621152f685275d36a9faf150ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -166,6 +166,20 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "kind": "ScalarField",
+                "name": "createdAt",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "updatedAt",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "User",
                 "kind": "LinkedField",
                 "name": "userId",
@@ -220,12 +234,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f9d114787fcb930989e5606079871658",
+    "cacheID": "b72560d370a1085df6f6f99debb84e28",
     "id": null,
     "metadata": {},
     "name": "EditFormMutation",
     "operationKind": "mutation",
-    "text": "mutation EditFormMutation(\n  $input: updateRecipeInput!\n) {\n  updateRecipe(input: $input) {\n    recipe {\n      ...RecipeCardFragment_recipes\n      id\n    }\n    error\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
+    "text": "mutation EditFormMutation(\n  $input: updateRecipeInput!\n) {\n  updateRecipe(input: $input) {\n    recipe {\n      ...RecipeCardFragment_recipes\n      id\n    }\n    error\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  createdAt\n  updatedAt\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
   }
 };
 })();
