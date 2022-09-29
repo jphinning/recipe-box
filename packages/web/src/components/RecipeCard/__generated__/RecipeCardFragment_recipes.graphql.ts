@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f9456bbaa3d716ab9c925d65e5d067d3>>
+ * @generated SignedSource<<6ae8b75069ed9923df704a0a1c826e02>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RecipeCardFragment_recipes$data = {
-  readonly createdAt: string | null;
   readonly description: string | null;
   readonly id: string;
+  readonly ingredients: ReadonlyArray<string | null>;
+  readonly instructions: ReadonlyArray<string | null>;
   readonly title: string;
   readonly userId: {
+    readonly email: string | null;
     readonly fullName: string | null;
     readonly id: string;
   };
@@ -59,7 +61,14 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "createdAt",
+      "name": "ingredients",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "instructions",
       "storageKey": null
     },
     {
@@ -71,6 +80,13 @@ return {
       "plural": false,
       "selections": [
         (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "email",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -87,6 +103,6 @@ return {
 };
 })();
 
-(node as any).hash = "238481a43ced4e303f126d2938492911";
+(node as any).hash = "2fd18ef34ab0a4631fe865766618f56b";
 
 export default node;

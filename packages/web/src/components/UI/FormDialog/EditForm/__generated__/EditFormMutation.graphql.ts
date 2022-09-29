@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<64897f64ab80495ee2721648b4f197b4>>
+ * @generated SignedSource<<49e8c010dcb798a4a67ee7081a4c6815>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,28 +10,29 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type createRecipeInput = {
+export type updateRecipeInput = {
   clientMutationId?: string | null;
   description?: string | null;
+  globalId?: string | null;
   ingredients: ReadonlyArray<string | null>;
   instructions: ReadonlyArray<string | null>;
   title: string;
 };
-export type CreateRecipeMutation$variables = {
+export type EditFormMutation$variables = {
   connections: ReadonlyArray<string>;
-  input: createRecipeInput;
+  input: updateRecipeInput;
 };
-export type CreateRecipeMutation$data = {
-  readonly createRecipe: {
+export type EditFormMutation$data = {
+  readonly updateRecipe: {
     readonly error: string | null;
     readonly recipe: {
       readonly " $fragmentSpreads": FragmentRefs<"RecipeCardFragment_recipes">;
     } | null;
   } | null;
 };
-export type CreateRecipeMutation = {
-  response: CreateRecipeMutation$data;
-  variables: CreateRecipeMutation$variables;
+export type EditFormMutation = {
+  response: EditFormMutation$data;
+  variables: EditFormMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -74,14 +75,14 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "CreateRecipeMutation",
+    "name": "EditFormMutation",
     "selections": [
       {
         "alias": null,
         "args": (v2/*: any*/),
-        "concreteType": "createRecipePayload",
+        "concreteType": "updateRecipePayload",
         "kind": "LinkedField",
-        "name": "createRecipe",
+        "name": "updateRecipe",
         "plural": false,
         "selections": [
           {
@@ -115,14 +116,14 @@ return {
       (v0/*: any*/)
     ],
     "kind": "Operation",
-    "name": "CreateRecipeMutation",
+    "name": "EditFormMutation",
     "selections": [
       {
         "alias": null,
         "args": (v2/*: any*/),
-        "concreteType": "createRecipePayload",
+        "concreteType": "updateRecipePayload",
         "kind": "LinkedField",
-        "name": "createRecipe",
+        "name": "updateRecipe",
         "plural": false,
         "selections": [
           {
@@ -219,16 +220,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b849c871da8d2b0b6b42156c2af555ad",
+    "cacheID": "f9d114787fcb930989e5606079871658",
     "id": null,
     "metadata": {},
-    "name": "CreateRecipeMutation",
+    "name": "EditFormMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateRecipeMutation(\n  $input: createRecipeInput!\n) {\n  createRecipe(input: $input) {\n    recipe {\n      ...RecipeCardFragment_recipes\n      id\n    }\n    error\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
+    "text": "mutation EditFormMutation(\n  $input: updateRecipeInput!\n) {\n  updateRecipe(input: $input) {\n    recipe {\n      ...RecipeCardFragment_recipes\n      id\n    }\n    error\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cf54ce444d394c7bcc77269e1432e562";
+(node as any).hash = "7ae4a5cfaba49415d8be39b8fd707c2b";
 
 export default node;

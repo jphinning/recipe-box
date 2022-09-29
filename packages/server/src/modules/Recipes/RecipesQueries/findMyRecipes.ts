@@ -14,7 +14,7 @@ export const findMyRecipes: GraphQLFieldConfig<any, any, any> = {
       };
     }
     const recipes = await RecipesModel.find({ userId: ctx.user.id }).sort({
-      createdAt: 'desc',
+      updatedAt: 'desc',
     });
 
     return connectionFromArray(recipes, args);

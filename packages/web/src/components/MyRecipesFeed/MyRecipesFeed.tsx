@@ -21,6 +21,7 @@ const MyRecipesFeed = ({ query }: IMyRecipesFeedProps) => {
   >(myRecipesQuery, query);
 
   const { findMyRecipes } = data;
+  const edgeId = findMyRecipes?.__id;
 
   const loadMore = useCallback(() => {
     if (!hasNext) return;
@@ -34,7 +35,14 @@ const MyRecipesFeed = ({ query }: IMyRecipesFeedProps) => {
     <>
       <CreateRecipe id={findMyRecipes?.__id} />
       {findMyRecipes?.edges?.map((edge) => {
-        return <RecipeCard key={edge?.node?.id} data={edge?.node!} />;
+        return (
+          <RecipeCard
+            key={edge?.node?.id}
+            data={edge?.node!}
+            edgeId={edgeId}
+            globalId={edge?.node?.id}
+          />
+        );
       })}
       {hasNext && (
         <PrimaryButton onClick={loadMore}>

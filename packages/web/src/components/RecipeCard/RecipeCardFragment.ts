@@ -5,9 +5,11 @@ export const RecipeCardFragment = graphql`
     id
     title
     description
-    createdAt
+    ingredients
+    instructions
     userId {
       id
+      email
       fullName
     }
   }

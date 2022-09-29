@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ce18918ebf433d01b9d45c546205c930>>
+ * @generated SignedSource<<14004eb08858e52bb76050b90dda769d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -158,7 +158,14 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "createdAt",
+                    "name": "ingredients",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "instructions",
                     "storageKey": null
                   },
                   {
@@ -170,6 +177,13 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "email",
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
@@ -227,12 +241,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7f4a249850a8595f21250467b369b4bc",
+    "cacheID": "ee1073d683e947b2a06a52f59fa97873",
     "id": null,
     "metadata": {},
     "name": "MyRecipesQuery",
     "operationKind": "query",
-    "text": "query MyRecipesQuery(\n  $after: String\n  $first: Int = 10\n) {\n  ...MyRecipes_query_2HEEH6\n}\n\nfragment MyRecipes_query_2HEEH6 on Query {\n  findMyRecipes(first: $first, after: $after) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...RecipeCardFragment_recipes\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  createdAt\n  userId {\n    id\n    fullName\n  }\n}\n"
+    "text": "query MyRecipesQuery(\n  $after: String\n  $first: Int = 10\n) {\n  ...MyRecipes_query_2HEEH6\n}\n\nfragment MyRecipes_query_2HEEH6 on Query {\n  findMyRecipes(first: $first, after: $after) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...RecipeCardFragment_recipes\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment RecipeCardFragment_recipes on Recipes {\n  id\n  title\n  description\n  ingredients\n  instructions\n  userId {\n    id\n    email\n    fullName\n  }\n}\n"
   }
 };
 })();
