@@ -24,8 +24,8 @@ Clone the project and install its dependencies:
 Create a .env file for the server based on the example provided in the repository.
 
 ```bash
-> cp packages/server/.env.example packages/server/.env
-> nano packages/server/.env
+> cp .env.example .env
+> nano .env
 ```
 
 ### Launch

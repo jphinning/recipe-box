@@ -3,7 +3,8 @@ import bodyParser from 'koa-bodyparser';
 import cors from '@koa/cors';
 import logger from 'koa-logger';
 import routes from './routes/healthCheck';
-import 'dotenv/config';
+import dotenv from 'dotenv';
+
 import {
   shouldRenderGraphiQL,
   renderGraphiQL,
@@ -16,6 +17,8 @@ import {
   findCurrentUser,
   IAuthContext,
 } from './modules/User/auth/findCurrentUser';
+
+dotenv.config({ path: '../../.env' });
 
 export const app = new Koa();
 
