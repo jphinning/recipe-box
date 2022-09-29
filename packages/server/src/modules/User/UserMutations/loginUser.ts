@@ -50,7 +50,7 @@ export const loginUser = mutationWithClientMutationId({
     }
 
     const token = jwt.sign({ id: user.id, email }, process.env.JWT_SECRET!, {
-      expiresIn: '10h',
+      expiresIn: process.env.JWT_EXPIRATION,
     });
 
     return { user, token };

@@ -12,6 +12,9 @@ function MyPosts() {
       }
     `,
     {},
+    {
+      fetchPolicy: 'store-and-network',
+    },
   );
 
   return (

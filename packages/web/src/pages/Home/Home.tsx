@@ -12,6 +12,9 @@ function Home() {
       }
     `,
     {},
+    {
+      fetchPolicy: 'store-and-network',
+    },
   );
 
   return (
