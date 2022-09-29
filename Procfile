@@ -1,1 +1,1 @@
-web: yarn prod:server;
+web: yarn; yarn prod:server;
