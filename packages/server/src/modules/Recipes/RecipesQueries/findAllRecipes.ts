@@ -8,11 +8,6 @@ export const findAllRecipes: GraphQLFieldConfig<any, any, any> = {
   type: RecipesConnection,
   args: connectionArgs,
   resolve: async (_, args, ctx: IAuthContext) => {
-    if (!ctx.user) {
-      return {
-        error: 'Unauthorized',
-      };
-    }
     const recipes = await RecipesModel.find({}).sort({ updatedAt: 'desc' });
 
     return connectionFromArray(recipes, args);

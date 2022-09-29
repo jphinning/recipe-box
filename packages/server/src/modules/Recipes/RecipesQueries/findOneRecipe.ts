@@ -8,12 +8,6 @@ export const findOneRecipe: GraphQLFieldConfig<any, any, any> = {
   type: RecipesType,
   args: { id: { type: GraphQLID } },
   resolve: async (_, args, ctx: IAuthContext) => {
-    if (!ctx.user) {
-      return {
-        error: 'Unauthorized',
-      };
-    }
-
     const { id } = fromGlobalId(args.id);
 
     return await RecipesModel.findById(id);

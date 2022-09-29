@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import {
+  Avatar,
   CircularProgress,
   Dialog,
   DialogContent,
@@ -13,6 +14,8 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { useMutation } from 'react-relay';
 import { toast } from 'react-toastify';
 import { DefaultField } from '../DefaultField/DefaultField';
+import { CardHeader, RecipeWrapper } from '../RecipeCard/RecipeCardStyles';
+import { SearchButton } from '../UI/Buttons/AddNewPostButton';
 import { Form, PrimaryButton } from '../UI/Form/FormStyles';
 import { createRecipeMutation } from './CreateRecipeMutation';
 import createRecipeSchema from './CreateRecipeSchema';
@@ -66,6 +69,14 @@ export const CreateRecipe = ({ id }: { id: string | undefined }) => {
 
   return (
     <>
+      <RecipeWrapper>
+        <CardHeader>
+          <Avatar>H</Avatar>
+          <SearchButton onClick={() => setOpen(true)}>
+            Add your post
+          </SearchButton>
+        </CardHeader>
+      </RecipeWrapper>
       <AddButton ariaLabel='SpeedDial' icon={<SpeedDialIcon />}>
         {actions.map((action) => (
           <SpeedDialAction
