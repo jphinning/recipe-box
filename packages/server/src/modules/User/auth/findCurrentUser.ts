@@ -18,14 +18,10 @@ export async function findCurrentUser(ctx: Context) {
   const accessToken = authorization.replace('Bearer', '').trim();
 
   try {
-    const { id, email, exp } = verify(
+    const { id, email } = verify(
       accessToken,
       process.env.JWT_SECRET!,
     ) as JwtPayload & ITokenPayload;
-
-    if (Date.now() >= exp! * 1000) {
-      return null;
-    }
 
     return { id, email };
   } catch {
