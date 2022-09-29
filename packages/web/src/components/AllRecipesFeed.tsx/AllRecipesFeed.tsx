@@ -33,7 +33,7 @@ const AllRecipesFeed = ({ query }: IAllRecipesFeedProps) => {
 
   return (
     <>
-      {hasNext && <CreateRecipe id={findAllRecipes?.__id} />}
+      <CreateRecipe id={findAllRecipes?.__id} />
       {findAllRecipes?.edges?.map((edge) => {
         return (
           <RecipeCard
