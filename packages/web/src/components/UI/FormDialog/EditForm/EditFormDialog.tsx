@@ -61,7 +61,7 @@ export const EditFormDialog = ({
         }
 
         if (data.updateRecipe?.recipe) {
-          toast.success('Post Created');
+          toast.success('Post updated');
         }
       },
     });

@@ -21,6 +21,7 @@ const AllRecipesFeed = ({ query }: IAllRecipesFeedProps) => {
   >(findAllRecipesQuery, query);
 
   const { findAllRecipes } = data;
+  const edgeId = findAllRecipes?.__id;
 
   const loadMore = useCallback(() => {
     if (!hasNext) return;
@@ -34,7 +35,14 @@ const AllRecipesFeed = ({ query }: IAllRecipesFeedProps) => {
     <>
       {hasNext && <CreateRecipe id={findAllRecipes?.__id} />}
       {findAllRecipes?.edges?.map((edge) => {
-        return <RecipeCard key={edge?.node?.id} data={edge?.node!} />;
+        return (
+          <RecipeCard
+            key={edge?.node?.id}
+            data={edge?.node!}
+            edgeId={edgeId}
+            globalId={edge?.node?.id}
+          />
+        );
       })}
 
       {hasNext && (

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import { EditFormDialog } from '../FormDialog/EditForm/EditFormDialog';
+import { RemoveDialog } from '../FormDialog/RemoveDialog/RemoveDialog';
 
 // eslint-disable-next-line no-unused-vars
 enum IMenuOptions {
@@ -92,6 +93,12 @@ export default function MenuIcon({ edgeId, recipeId }: IMenuIconProps) {
         edgeId={edgeId}
         openModal={whichModal === 'EDIT'}
         title={'Edit Recipe'}
+        setOpenModal={() => setWhichModal(null)}
+      />
+      <RemoveDialog
+        recipeId={recipeId}
+        edgeId={edgeId}
+        openModal={whichModal === 'DELETE'}
         setOpenModal={() => setWhichModal(null)}
       />
     </div>
