@@ -8,7 +8,8 @@
     "dev:all": "concurrently -kill-others-on-fail \"yarn dev:server\" \"yarn dev:web\"",
     "dev:server": "yarn workspace server dev",
     "dev:web": "yarn workspace web dev",
-    "prod:server":"yarn workspace server build && yarn workspace server start",
+    "build": "yarn workspace server build",
+    "start": "yarn workspace server start",
     "lint": "eslint '**/*.{js,jsx,ts,tsx}' --fix",
     "format": "prettier --write '**/*.{ts,tsx}'"
   },
