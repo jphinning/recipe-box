@@ -6,7 +6,7 @@ import { Avatar, Box, IconButton, Stack, Typography } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import { TEXT_GRAY } from '../../utils/colorConsts';
-import { CardHeader, RecipeWrapper } from './RecipeCardStyles';
+import { CardHeader, RecipeWrapper, RouterLink } from './RecipeCardStyles';
 import { useFragment } from 'react-relay';
 import { RecipeCardFragment_recipes$key } from './__generated__/RecipeCardFragment_recipes.graphql';
 import { RecipeCardFragment } from './RecipeCardFragment';
@@ -34,7 +34,9 @@ export const RecipeCard = ({ data, globalId, edgeId }: IRecipeCardProps) => {
       <CardHeader>
         <Avatar>H</Avatar>
         <div>
-          <Typography sx={{ fontWeight: 600 }}>{res.title}</Typography>
+          <RouterLink to={globalId!}>
+            <Typography sx={{ fontWeight: 600 }}>{res.title}</Typography>
+          </RouterLink>
           <Typography
             variant='caption'
             sx={{ fontWeight: 200, color: TEXT_GRAY }}

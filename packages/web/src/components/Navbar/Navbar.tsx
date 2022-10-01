@@ -25,10 +25,10 @@ function Navbar() {
 
   return (
     <NavbarStyles>
-      <NavLink path={'/'}>
+      <NavLink path={'/home'}>
         <img height='50px' alt='logo' src={logo} />
       </NavLink>
-      <NavLink path='/'>{t('Home.title')}</NavLink>
+      <NavLink path='/home'>{t('Home.title')}</NavLink>
       <NavLink path='/dashboard'>{t('Dashboard.title')}</NavLink>
       <NavBarButtons>
         <IconButton aria-label='Logout' onClick={signOut}>

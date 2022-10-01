@@ -7,6 +7,7 @@ import Dashboard from './MyPosts/MyPosts';
 import Home from './Home/Home';
 import SignIn from './SignIn/SignIn';
 import SignUp from './SignUp/SignUp';
+import MyPost from './OnePost.tsx/OnePost';
 
 function Router() {
   return (
@@ -20,6 +21,23 @@ function Router() {
         }
       />
       <Route
+        path='/home'
+        element={
+          <RequireAuth>
+            <Home />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path='/home/:recipeId'
+        element={
+          <RequireAuth>
+            <MyPost />
+          </RequireAuth>
+        }
+      />
+
+      <Route
         path='/dashboard'
         element={
           <RequireAuth>
@@ -27,6 +45,14 @@ function Router() {
           </RequireAuth>
         }
       />
+      <Route
+        path='/dashboard/:recipeId'
+        element={
+          <RequireAuth>
+            <MyPost />
+          </RequireAuth>
+        }
+      ></Route>
       <Route
         path='/login'
         element={
