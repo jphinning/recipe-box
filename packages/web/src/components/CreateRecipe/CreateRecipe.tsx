@@ -96,6 +96,9 @@ export const CreateRecipe = ({ id }: { id: string | undefined }) => {
               name='description'
               control={control}
               label='Description'
+              multiline
+              rows={7}
+              maxRows={7}
             />
             <PrimaryButton onClick={handleSubmit(onSubmit)}>
               {isCreateRecipeLoading ? (
